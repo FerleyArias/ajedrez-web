@@ -1,0 +1,19 @@
+.table {
+  width: 480px;
+  height: 480px;
+  border: 1px solid black;
+  display: grid;
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+}
+.cell {
+  width: 60px;
+  height: 60px;
+}
+
+.black {
+  background-color: #444;
+}
+
+.white {
+  background-color: #CCC;
+}
