@@ -39,7 +39,6 @@
     pieces.splice(this.index,1)
     for (let i = 0; i < pieces.length; i++) {
       pieces[i].index = i
-      
     }
   }
 }

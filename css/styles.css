@@ -69,6 +69,37 @@ body {
   border-radius: 5px;
 }
 
+.promotion {
+  position: fixed;
+  background-color: #00000055;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.promotion__list {
+  margin: 0 auto;
+  max-width: 400px;
+  width: 100%;
+  background: white;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -80px;
+  z-index: 100;
+  transition-duration: 1s;
+}
+
+.promotion__list:hover {
+  top: 0;
+  transition: 1s;
+}
+
 .ocult {
   display: none;
 }

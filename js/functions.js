@@ -5,10 +5,11 @@ import Pawn from './pieces/Pawn.js'
 import Queen from './pieces/Queen.js'
 import Rook from './pieces/Rook.js'
 import { checkBlack, checkWhite } from './pieces/King.js'
-import { ctx,pieces, piecesBlack,piecesWhite } from './code.js'
+import { ctx,pieces, piecesBlack,piecesWhite, canvas } from './code.js'
 export let kingBlack, kingWhite
 let initialTable = ['rook', 'knight', 'bishop' ,'queen', 'king', 'bishop', 'knight', 'rook']
 export function drawTable () {
+  canvas.width = canvas.width
   let x = 0
   let y = 0
   let par = 0
@@ -94,6 +95,18 @@ export function drawPieces () {
     } else {
       piecesBlack.push(piece)
     }
+  })
+}
+export function drawMoves(moves) {
+  moves.forEach(move => {
+    ctx.beginPath()
+    if(move.move === 'kill') {
+      ctx.fillStyle = '#FF000055'
+    } else {
+      ctx.fillStyle = '#00000055'
+    }
+    ctx.arc((move.x*60)+30,(move.y*60)+30,15,0,(Math.PI/180)*360,true);
+    ctx.fill();
   })
 }
 export function validate(x,y) {
@@ -189,12 +202,43 @@ export function nextTurn(color) {
   arrayAllies.forEach(piece => {
     count += piece.moves.length
   })
-  console.log(check);
   if(check && count === 0) {
     alert(`the winer is ${colorEnemy}`)
   }
   else if (count === 0) {
     alert('empate')
   }
+}
 
+export function promotion(promotionData) {
+  let promotionPiece,colorEnemy
+  if (promotionData.piece === 'rook') {
+    promotionPiece= new Rook(promotionData.color, pieces.length)
+  } 
+  else if (promotionData.piece === 'bishop') {
+    promotionPiece= new Bishop(promotionData.color, pieces.length)
+  } 
+  else if (promotionData.piece === 'queen') {
+    promotionPiece= new Queen(promotionData.color, pieces.length)
+  } 
+  else {
+    promotionPiece= new Knight(promotionData.color, pieces.length)
+  }
+  promotionPiece.draw(promotionData.x, promotionData.y)
+  pieces.push(promotionPiece)
+  promotionData.pawn.delete()
+  console.log(pieces);
+  drawTable()
+  pieces.forEach(piece => {
+    piece.draw(piece.x, piece.y)
+  })
+  console.log(pieces);
+  if (promotionData.color === 'white') {
+    piecesWhite.push(promotionPiece)
+    colorEnemy = 'black'
+  } else {
+    piecesBlack.push(promotionPiece)
+    colorEnemy = 'white'
+  }
+  nextTurn(colorEnemy)
 }

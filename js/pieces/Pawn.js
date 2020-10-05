@@ -10,25 +10,50 @@ import {validate} from '../functions.js'
   setMoves() {
     this.moves = []
     this.posibleMoves = []
-    let num
+    let num,yPromotion
     if(this.direction === 'up') {
       num = -1
+      yPromotion = 0
     } else {
       num = 1
+      yPromotion = 7
     }
     let y = this.y + num
     let x = this.x
+    let move
     let validation = validate(x,y)
     validation = validate(this.x - 1,this.y + num)
     if(validation.respond === 'occupied' && validation.piece.color != this.color) {
-      this.moves.push({move: 'kill', x:this.x - 1,y:this.y + num, piece: validation.piece, index: this.index})
+      move = {
+        move: 'kill', 
+        x:this.x - 1,
+        y:this.y + num, 
+        piece: validation.piece, 
+        index: this.index,
+        promotion: false
+      }
+      if(this.y + num === yPromotion) {
+        move.promotion = true 
+      }
+      this.moves.push(move)
     }
     else if(validation.respond === 'void') {
       this.posibleMoves.push({move: 'normal', x:this.x - 1,y:this.y + num})
     }
     validation = validate(this.x + 1,this.y + num)
     if(validation.respond === 'occupied' && validation.piece.color != this.color) {
-      this.moves.push({move: 'kill', x:this.x + 1,y:this.y + num, piece: validation.piece, index: this.index})
+      move = {
+        move: 'kill', 
+        x:this.x + 1,
+        y:this.y + num, 
+        piece: validation.piece, 
+        index: this.index,
+        promotion: false
+      }
+      if(this.y + num === yPromotion) {
+        move.promotion = true
+      }
+      this.moves.push(move)
     }
     else if(validation.respond === 'void') {
       this.posibleMoves.push({move: 'normal', x:this.x + 1,y:this.y + num})
@@ -37,7 +62,17 @@ import {validate} from '../functions.js'
     y = this.y + num
     validation = validate(x,y)
     if(validation.respond === 'void') {
-      this.moves.push({move: 'normal', x:x,y:y, index: this.index})
+      move = {
+        move: 'normal', 
+        x:x,
+        y:y, 
+        index: this.index,
+        promotion: false
+      }
+      if(this.y + num === yPromotion) {
+        move.promotion = true
+      }
+      this.moves.push(move)
     } 
     else {
       return
