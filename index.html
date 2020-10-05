@@ -7,201 +7,43 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="table">
-    <div class="cell white">
-      <img src="sources/black_rook.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_knight.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_bishop.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_queen.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_king.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_bishop.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_knight.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_rook.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/black_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell black">
-
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell white">
-
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell black">
-
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell black">
-      
-    </div>
-    <div class="cell white">
-      
-    </div>
-    <div class="cell white">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_pawn.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_rook.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_knight.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_bishop.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_queen.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_king.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_bishop.png" alt="">
-    </div>
-    <div class="cell black">
-      <img src="sources/white_knight.png" alt="">
-    </div>
-    <div class="cell white">
-      <img src="sources/white_rook.png" alt="">
-    </div>
-
-  </div>
-  <script src="js/code.js"></script>
+  <header class="header">
+    <h1>Chess</h1>
+  </header>
+  <main>
+    <div class="container">
+      <div class="table">
+        <canvas id="table" width="480px" height="480px">
+        </canvas>
+      </div>
+      <div class="controls">
+        <div class="player">
+          <h3>Player 1</h3>
+          <div class="player__name">
+            <label for="">Name: </label>
+            <input type="text">
+          </div>
+          <div class="player__decitions" >
+            <button>Rendirse</button>
+            <button>Empate</button>
+          </div>
+        </div>
+        <button class="controls__start" id="start">Start</button>
+        <div class="player">
+          <h3>Player 2</h3>
+          <div class="player__name">
+            <label for="">Name:</label>
+            <input type="text">
+          </div>
+          <div class="player__decitions">
+            <button>Rendirse</button>
+            <button>Empate</button>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </main>
+  <script type="module" src="js/code.js"></script>
 </body>
 </html>
