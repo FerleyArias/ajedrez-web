@@ -6,7 +6,7 @@ import Queen from './pieces/Queen.js'
 import Rook from './pieces/Rook.js'
 import { checkBlack, checkWhite } from './pieces/King.js'
 import { ctx,pieces, piecesBlack,piecesWhite, canvas } from './code.js'
-export let kingBlack, kingWhite
+export let kingBlack, kingWhite, pointsBlack, pointsWhite
 let initialTable = ['rook', 'knight', 'bishop' ,'queen', 'king', 'bishop', 'knight', 'rook']
 export function drawTable () {
   canvas.width = canvas.width
@@ -202,12 +202,19 @@ export function nextTurn(color) {
   arrayAllies.forEach(piece => {
     count += piece.moves.length
   })
-  if(check && count === 0) {
-    alert(`the winer is ${colorEnemy}`)
-  }
-  else if (count === 0) {
-    alert('empate')
-  }
+  setTimeout(() => {
+    let msg
+    if(check && count === 0) {
+      msg = `the winer is ${colorEnemy}`
+    }
+    else if (count === 0) {
+      msg = 'empate'
+    }
+    if(msg) {
+      alert(msg)
+      drawTable()
+    }
+  },1)
 }
 
 export function promotion(promotionData) {
@@ -241,4 +248,11 @@ export function promotion(promotionData) {
     colorEnemy = 'white'
   }
   nextTurn(colorEnemy)
+}
+
+export function limpiar() {
+  let list = document.querySelectorAll('.game__kills') 
+  list.forEach(item => {
+    item.innerHTML = ''
+  })
 }

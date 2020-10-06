@@ -8,7 +8,7 @@
     this.move = false
     this.moves = []
     this.image = new Image()
-    const imageUrl = `../sources/${this.color}_${this.name}.png`
+    const imageUrl = `sources/${this.color}_${this.name}.png`
     this.image.src = imageUrl
     this.carga = false
   }
@@ -24,12 +24,16 @@
     }
   }
   delete() {
-    let array
+    let array, killsContainer
     if (this.color === 'white') {
       array = piecesWhite
+      killsContainer = document.querySelector('.game__kills.black')
     } else {
       array = piecesBlack
+      killsContainer = document.querySelector('.game__kills.white')
     }
+    killsContainer.appendChild(this.image)
+
     for (let i = 0; i < array.length; i++) {
       if(array[i].index === this.index) {
         array.splice(i,1)

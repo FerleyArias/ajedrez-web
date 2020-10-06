@@ -1,13 +1,14 @@
-import { drawTable, drawPieces, nextTurn, drawMoves, promotion } from './functions.js'
+import { drawTable, drawPieces, nextTurn, drawMoves, promotion, limpiar } from './functions.js'
 export const canvas = document.getElementById('table')
 export const ctx = canvas.getContext('2d')
-export let pieces = [], piecesWhite = [], piecesBlack = [], moves = [], turn, moving
+export let pieces = [], piecesWhite = [], piecesBlack = [], moves = [], turn
 
 drawTable()
 
 const btnStart = document.getElementById('start')
 btnStart.addEventListener('click', () => {
-  pieces = [], piecesWhite = [], piecesBlack = []
+  limpiar()
+  pieces = [], piecesWhite = [], piecesBlack = [],
   drawTable()
   drawPieces()
   turn = 'white'
@@ -56,19 +57,28 @@ canvas.addEventListener('click', (event) => {
             list = document.querySelector('.promotion__list.black')
           }
           list.classList.remove('ocult')
+          setTimeout(() => {
+            list.classList.add('inUp')
+          },1)
           promotionOptions = list.querySelectorAll('button')
           promotionOptions.forEach(piece => {
             piece.addEventListener('click', event => {
               promotionData.piece = event.target.attributes[1].value
               promotion(promotionData)
-              container.classList.add('ocult')
-              list.classList.add('ocult')
+              list.classList.remove('inUp')
+              setInterval(() => {
+                container.classList.add('ocult')
+                list.classList.add('ocult')
+              },500)
             })
           })
           container.addEventListener('click', () => {
             if(confirm('Seguro que no quieres promocinar a tu peon?')) {
-              container.classList.add('ocult')
-              list.classList.add('ocult')
+              list.classList.remove('inUp')
+              setInterval(() => {
+                container.classList.add('ocult')
+                list.classList.add('ocult')
+              },500)
             }
           })
         }
@@ -91,7 +101,6 @@ canvas.addEventListener('click', (event) => {
         } else {
           turn = 'white'
         }
-        moving = false 
         moves = []
         nextTurn(turn)
         return
@@ -99,7 +108,6 @@ canvas.addEventListener('click', (event) => {
     }
   }
   moves = []
-  moving = false
   drawTable()
   pieces.forEach(piece => {
     piece.draw(piece.x,piece.y)

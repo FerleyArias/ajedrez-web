@@ -5,6 +5,7 @@ import {validate} from '../functions.js'
 export default class Queen extends Piece {
   constructor(color, index) {
     super('queen', color, index);
+    this.value = 9
   }
   setMoves() {
     this.moves = []

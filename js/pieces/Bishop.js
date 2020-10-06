@@ -4,6 +4,7 @@ import {validate} from '../functions.js'
 export default class Bishop extends Piece {
   constructor(color, index) {
     super('bishop', color, index);
+    this.value = 3
   }
   setMoves() {
     this.moves = []

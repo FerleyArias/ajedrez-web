@@ -4,6 +4,7 @@ import {validate} from '../functions.js'
 export default class Rook extends Piece {
   constructor(color, index) {
     super('rook', color, index);
+    this.value = 5
   }
   setMoves() {
     this.moves = []

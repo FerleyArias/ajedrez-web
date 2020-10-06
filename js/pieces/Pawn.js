@@ -6,6 +6,7 @@ import {validate} from '../functions.js'
     super('pawn', color, index);
     this.posibleMoves= []
     this.direction = direction
+    this.value = 1
   }
   setMoves() {
     this.moves = []
