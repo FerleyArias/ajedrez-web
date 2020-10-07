@@ -1,4 +1,4 @@
-import { drawTable, drawPieces, nextTurn, drawMoves, promotion, limpiar } from './functions.js'
+import { drawTable, drawPieces, nextTurn, drawMoves, promotion, limpiar, timer } from './functions.js'
 export const canvas = document.getElementById('table')
 export const ctx = canvas.getContext('2d')
 export let pieces = [], piecesWhite = [], piecesBlack = [], moves = [], turn
@@ -15,6 +15,7 @@ btnStart.addEventListener('click', () => {
   piecesWhite.forEach(piece => {
     piece.setMoves()
   })
+  timer(turn)
 })
 
 canvas.addEventListener('click', (event) => {

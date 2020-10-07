@@ -6,8 +6,10 @@ import Queen from './pieces/Queen.js'
 import Rook from './pieces/Rook.js'
 import { checkBlack, checkWhite } from './pieces/King.js'
 import { ctx,pieces, piecesBlack,piecesWhite, canvas } from './code.js'
-export let kingBlack, kingWhite, pointsBlack, pointsWhite
+import { countBlack, countWhite } from './piece.js'
+export let kingBlack, kingWhite, timerWhite = {value:900000} ,timerBlack = {value:900000}
 let initialTable = ['rook', 'knight', 'bishop' ,'queen', 'king', 'bishop', 'knight', 'rook']
+let globalTimer
 export function drawTable () {
   canvas.width = canvas.width
   let x = 0
@@ -15,9 +17,9 @@ export function drawTable () {
   let par = 0
   for (let i = 1; i <= 64; i++) {
     if (i%2 == par) {
-      ctx.fillStyle = "#444"  
+      ctx.fillStyle = "#6E3B02"  
     } else {
-      ctx.fillStyle = "#CCC"
+      ctx.fillStyle = "#F7CFA3"
     }
     ctx.fillRect(x*60,y*60,60,60);
     x++
@@ -208,13 +210,37 @@ export function nextTurn(color) {
       msg = `the winer is ${colorEnemy}`
     }
     else if (count === 0) {
-      msg = 'empate'
+      msg = 'Tablas por rey ahogado'
+    }
+    else if (alonepieces(countBlack) === 'king' && alonepieces(countWhite) === 'king') {
+      msg = 'Tablas por falta de material'
+    }
+    else if ((alonepieces(countBlack) === 'king' && alonepieces(countWhite) === 'bishop') ||
+    (alonepieces(countBlack) === 'bishop' && alonepieces(countWhite) === 'king')) {
+      msg = 'Tablas por falta de material'
+    }
+    else if ((alonepieces(countBlack) === 'king' && alonepieces(countWhite) === 'knight') ||
+    (alonepieces(countBlack) === 'knight' && alonepieces(countWhite) === 'king')) {
+      msg = 'Tablas por falta de material'
     }
     if(msg) {
       alert(msg)
       drawTable()
     }
   },1)
+  timer(color)
+}
+
+export function alonepieces(count) {
+  if(((count.bishop === 0 && count.Knight === 0) && (count.pawn === 0 && count.queen === 0)) &&  count.rook === 0) {
+    return 'king'
+  }
+  else if((count.knight === 0 && count.pawn === 0) && (count.queen === 0 &&  count.rook === 0)) {
+    return 'bishop'
+  }
+  else if((count.bishop === 0 && count.pawn === 0) && (count.queen === 0 &&  count.rook === 0)) {
+    return 'knight'
+  }
 }
 
 export function promotion(promotionData) {
@@ -234,12 +260,10 @@ export function promotion(promotionData) {
   promotionPiece.draw(promotionData.x, promotionData.y)
   pieces.push(promotionPiece)
   promotionData.pawn.delete()
-  console.log(pieces);
   drawTable()
   pieces.forEach(piece => {
     piece.draw(piece.x, piece.y)
   })
-  console.log(pieces);
   if (promotionData.color === 'white') {
     piecesWhite.push(promotionPiece)
     colorEnemy = 'black'
@@ -250,7 +274,56 @@ export function promotion(promotionData) {
   nextTurn(colorEnemy)
 }
 
+export function timer(color) {
+  window.clearInterval(globalTimer)
+  let desactives = document.querySelectorAll('.game__timer div')
+  desactives.forEach(desactive => {
+    if (!desactive.classList.contains('.desactive')) {
+      desactive.classList.add('desactive')
+    }
+  })
+  let time, contentTimer
+  if(color === 'white') {
+    time = timerWhite 
+    contentTimer = document.querySelector('.game__timer.white')
+  } else {
+    time = timerBlack
+    contentTimer = document.querySelector('.game__timer.black')
+  }
+  contentTimer.children[1].classList.remove('desactive')
+  globalTimer = setInterval(()=> {
+    let minutes = new Date(time.value).getMinutes()
+    let seconds = new Date(time.value).getSeconds()
+    if(seconds < 10) {
+      seconds = '0'+ seconds
+    }
+    if(minutes < 10) {
+      minutes = '0'+ minutes
+    }
+    contentTimer.children[0].innerHTML = minutes + ':' + seconds
+    if(time.value <= 0) {
+      if(color === 'white') {
+        console.log('los ganadores son las negras');
+      } else {
+        console.log('los ganadores son las blancas');
+      }
+      limpiar()
+    }
+    time.value -= 1000
+  },1000)
+}
+
 export function limpiar() {
+  window.clearInterval(globalTimer)
+  let timers = document.querySelectorAll('.game__timer')
+  timers.forEach(timer => {
+    if (!timer.children[1].classList.contains('.desactive')) {
+      timer.children[1].classList.add('desactive')
+    }
+    timer.children[0].innerHTML = '15:00'
+  })
+  timerWhite.value = 900000 
+  timerBlack.value = 900000
   let list = document.querySelectorAll('.game__kills') 
   list.forEach(item => {
     item.innerHTML = ''
