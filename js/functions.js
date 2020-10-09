@@ -303,9 +303,9 @@ export function timer(color) {
     contentTimer.children[0].innerHTML = minutes + ':' + seconds
     if(time.value <= 0) {
       if(color === 'white') {
-        console.log('los ganadores son las negras');
+        alert('los ganadores son las negras');
       } else {
-        console.log('los ganadores son las blancas');
+        alert('los ganadores son las blancas');
       }
       limpiar()
     }
