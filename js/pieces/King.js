@@ -1,5 +1,5 @@
 import Piece from '../piece.js'
-import {piecesBlack, piecesWhite} from '../code.js'
+import { piecesBlack, piecesWhite } from '../functions.js'
 import {validate, findEnemyMoves } from '../functions.js'
 export let checkBlack, checkWhite
 
@@ -21,16 +21,6 @@ export default class King extends Piece {
       arrayEnemies = piecesWhite
       arrayAllies = piecesBlack
     } 
-    if(findEnemyMoves(this.x,this.y, arrayEnemies)) {
-      check = true
-    } else {
-      check = false
-    }
-    if(this.color === 'white') {
-      checkWhite = check
-    } else {
-      checkBlack = check
-    }
     for (let i = 0; i < 4; i++) {
       if(i === 0 || i === 1) {
         num = 1
@@ -51,6 +41,16 @@ export default class King extends Piece {
           coordenadas.y += num
         }
       }
+    }
+    if(findEnemyMoves(this.x,this.y, arrayEnemies)) {
+      check = true
+    } else {
+      check = false
+    }
+    if(this.color === 'white') {
+      checkWhite = check
+    } else {
+      checkBlack = check
     }
     if(this.move || check) {
       return

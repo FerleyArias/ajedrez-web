@@ -1,14 +1,14 @@
 import { drawTable, drawPieces, nextTurn, drawMoves, promotion, limpiar, timer } from './functions.js'
 export const canvas = document.getElementById('table')
 export const ctx = canvas.getContext('2d')
-export let pieces = [], piecesWhite = [], piecesBlack = [], moves = [], turn
+export let moves = [], turn
+import { pieces, piecesBlack, piecesWhite } from './functions.js'
 
 drawTable()
 
 const btnStart = document.getElementById('start')
 btnStart.addEventListener('click', () => {
   limpiar()
-  pieces = [], piecesWhite = [], piecesBlack = [],
   drawTable()
   drawPieces()
   turn = 'white'

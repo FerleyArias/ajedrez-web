@@ -5,9 +5,10 @@ import Pawn from './pieces/Pawn.js'
 import Queen from './pieces/Queen.js'
 import Rook from './pieces/Rook.js'
 import { checkBlack, checkWhite } from './pieces/King.js'
-import { ctx,pieces, piecesBlack,piecesWhite, canvas } from './code.js'
+import { ctx, canvas } from './code.js'
 import { countBlack, countWhite } from './piece.js'
 export let kingBlack, kingWhite, timerWhite = {value:900000} ,timerBlack = {value:900000}
+export let pieces = [], piecesWhite = [], piecesBlack = []
 let initialTable = ['rook', 'knight', 'bishop' ,'queen', 'king', 'bishop', 'knight', 'rook']
 let globalTimer
 export function drawTable () {
@@ -207,7 +208,7 @@ export function nextTurn(color) {
   setTimeout(() => {
     let msg
     if(check && count === 0) {
-      msg = `the winer is ${colorEnemy}`
+      msg = `el ganador son las ${colorEnemy === 'white'? 'blancas': 'Negras'}`
     }
     else if (count === 0) {
       msg = 'Tablas por rey ahogado'
@@ -226,6 +227,7 @@ export function nextTurn(color) {
     if(msg) {
       alert(msg)
       drawTable()
+      limpiar()
     }
   },1)
   timer(color)
@@ -308,12 +310,14 @@ export function timer(color) {
         alert('los ganadores son las blancas');
       }
       limpiar()
+      drawTable()
     }
-    time.value -= 1000
-  },1000)
+    time.value -= 500
+  },500)
 }
 
 export function limpiar() {
+  pieces = [], piecesWhite = [], piecesBlack = []
   window.clearInterval(globalTimer)
   let timers = document.querySelectorAll('.game__timer')
   timers.forEach(timer => {

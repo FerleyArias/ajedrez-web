@@ -1,4 +1,5 @@
- import {ctx, pieces, piecesBlack, piecesWhite} from './code.js'
+ import { ctx } from './code.js'
+ import { pieces, piecesBlack, piecesWhite } from './functions.js'
  export let countBlack = {bishop: 0, knight: 0, pawn: 0, queen: 0, rook: 0}
  export let countWhite = {bishop: 0, knight: 0, pawn: 0, queen: 0, rook: 0}
  
