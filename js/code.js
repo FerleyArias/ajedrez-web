@@ -1,14 +1,45 @@
 import { drawTable, drawPieces, nextTurn, drawMoves, promotion, limpiar, timer } from './functions.js'
 export const canvas = document.getElementById('table')
 export const ctx = canvas.getContext('2d')
+export const $players = document.querySelectorAll('.player')
+export const $btnStart = document.getElementById('start')
 export let moves = [], turn
+export let playerWhite = '', playerBlack = ''
 import { pieces, piecesBlack, piecesWhite } from './functions.js'
 
 drawTable()
 
-const btnStart = document.getElementById('start')
-btnStart.addEventListener('click', () => {
-  limpiar()
+$btnStart.addEventListener('click', () => {
+  $btnStart.classList.add('ocult')
+  $players.forEach(player => {
+    const decitions = player.querySelector('.player__decitions')
+    const playerForm = player.querySelector('.player__form')
+    let name = player.querySelector('.player__form input').value
+    const nameTag = player.querySelector('.player__name')
+    nameTag.classList.remove('ocult')
+    playerForm.classList.add('ocult')
+    if(name != '') {
+      nameTag.innerHTML = name
+    } else {
+      name = 'Player'
+      nameTag.innerHTML = 'Player'
+    }
+    if(player.attributes[1].value === 'white') {
+      playerWhite =  name
+    } else {
+      playerBlack =  name
+    }
+    decitions.classList.remove('ocult')
+    decitions.querySelector('.surrender').addEventListener('click', e => {
+      if(e.target.attributes[1].value  != 'white') {
+        alert(`el ganador es ${playerWhite}`)
+      } else {
+        alert(`el ganador es ${playerBlack}`)
+      }
+      drawTable()
+      limpiar()
+    })
+  })
   drawTable()
   drawPieces()
   turn = 'white'

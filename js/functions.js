@@ -5,7 +5,7 @@ import Pawn from './pieces/Pawn.js'
 import Queen from './pieces/Queen.js'
 import Rook from './pieces/Rook.js'
 import { checkBlack, checkWhite } from './pieces/King.js'
-import { ctx, canvas } from './code.js'
+import { ctx, canvas, $players, $btnStart, playerWhite, playerBlack } from './code.js'
 import { countBlack, countWhite } from './piece.js'
 export let kingBlack, kingWhite, timerWhite = {value:900000} ,timerBlack = {value:900000}
 export let pieces = [], piecesWhite = [], piecesBlack = []
@@ -208,7 +208,7 @@ export function nextTurn(color) {
   setTimeout(() => {
     let msg
     if(check && count === 0) {
-      msg = `el ganador son las ${colorEnemy === 'white'? 'blancas': 'Negras'}`
+      msg = `el ganador es ${colorEnemy === 'white'? playerWhite : piecesBlack}`
     }
     else if (count === 0) {
       msg = 'Tablas por rey ahogado'
@@ -305,9 +305,9 @@ export function timer(color) {
     contentTimer.children[0].innerHTML = minutes + ':' + seconds
     if(time.value <= 0) {
       if(color === 'white') {
-        alert('los ganadores son las negras');
+        alert(`el ganador es ${playerWhite}`)
       } else {
-        alert('los ganadores son las blancas');
+        alert(`el ganador es ${playerBlack}`)
       }
       limpiar()
       drawTable()
@@ -317,6 +317,15 @@ export function timer(color) {
 }
 
 export function limpiar() {
+  $btnStart.classList.remove('ocult')
+  $players.forEach(player => {
+    const decitions = player.querySelector('.player__decitions')
+    const playerForm = player.querySelector('.player__form')
+    const nameTag = player.querySelector('.player__name')
+    nameTag.classList.add('ocult')
+    playerForm.classList.remove('ocult')
+    decitions.classList.add('ocult')
+  })
   pieces = [], piecesWhite = [], piecesBlack = []
   window.clearInterval(globalTimer)
   let timers = document.querySelectorAll('.game__timer')
