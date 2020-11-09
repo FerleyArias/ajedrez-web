@@ -30,15 +30,6 @@ $btnStart.addEventListener('click', () => {
       playerBlack =  name
     }
     decitions.classList.remove('ocult')
-    decitions.querySelector('.surrender').addEventListener('click', e => {
-      if(e.target.attributes[1].value  != 'white') {
-        alert(`el ganador es ${playerWhite}`)
-      } else {
-        alert(`el ganador es ${playerBlack}`)
-      }
-      drawTable()
-      limpiar()
-    })
   })
   drawTable()
   drawPieces()
@@ -47,6 +38,19 @@ $btnStart.addEventListener('click', () => {
     piece.setMoves()
   })
   timer(turn)
+})
+
+$players.forEach(player => {
+  const decitions = player.querySelector('.player__decitions')
+  decitions.querySelector('.surrender').addEventListener('click', e => {
+    if(e.target.attributes[1].value  != 'white') {
+      alert(`el ganador es ${playerWhite}`)
+    } else {
+      alert(`el ganador es ${playerBlack}`)
+    }
+    drawTable()
+    limpiar()
+  })
 })
 
 canvas.addEventListener('click', (event) => {

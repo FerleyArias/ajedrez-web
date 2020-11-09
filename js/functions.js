@@ -312,8 +312,8 @@ export function timer(color) {
       limpiar()
       drawTable()
     }
-    time.value -= 500
-  },500)
+    time.value -= 10
+  },10)
 }
 
 export function limpiar() {
