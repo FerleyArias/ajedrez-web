@@ -60,19 +60,20 @@ export default class King extends Piece {
       rooks.forEach(rook => {
         let xRook,xKing,x = this.x, castling = true
         if(this.x > rook.x) {
-          for (let i = 1; i < 3; i++) {
+          for (let i = 1; i < 4; i++) {
             x--
-            if(findEnemyMoves(x,this.y,arrayEnemies) || validate(x,this.y).respond === 'occupied') {
+            if((findEnemyMoves(x,this.y,arrayEnemies) && i < 3) || validate(x,this.y).respond === 'occupied') {
               castling = false
               break
             }
           }
+          
           xRook= this.x -1
           xKing= this.x -2
         } else {
-          for (let i = 1; i < 4; i++) {
+          for (let i = 1; i < 3; i++) {
             x++
-            if((findEnemyMoves(x,this.y,arrayEnemies) && i < 3) || validate(x,this.y).respond === 'occupied') {
+            if(findEnemyMoves(x,this.y,arrayEnemies) || validate(x,this.y).respond === 'occupied') {
               castling = false
               break
             }

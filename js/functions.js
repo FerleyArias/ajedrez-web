@@ -208,7 +208,7 @@ export function nextTurn(color) {
   setTimeout(() => {
     let msg
     if(check && count === 0) {
-      msg = `el ganador es ${colorEnemy === 'white'? playerWhite : piecesBlack}`
+      msg = `el ganador es ${colorEnemy === 'white'? playerWhite : playerBlack}`
     }
     else if (count === 0) {
       msg = 'Tablas por rey ahogado'
