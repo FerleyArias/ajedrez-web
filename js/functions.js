@@ -12,7 +12,7 @@ export let pieces = [], piecesWhite = [], piecesBlack = []
 let initialTable = ['rook', 'knight', 'bishop' ,'queen', 'king', 'bishop', 'knight', 'rook']
 let globalTimer
 export function drawTable () {
-  canvas.width = canvas.width4
+  canvas.width = canvas.width
   let x = 0
   let y = 0
   let par = 0

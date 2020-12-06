@@ -18,12 +18,10 @@ $btnStart.addEventListener('click', () => {
     const nameTag = player.querySelector('.player__name')
     nameTag.classList.remove('ocult')
     playerForm.classList.add('ocult')
-    if(name != '') {
-      nameTag.innerHTML = name
-    } else {
-      name = 'Player'
-      nameTag.innerHTML = 'Player'
+    if(!name) {
+      player.attributes[1].value === 'white'? name = 'Player 1' : name = 'Player 2' 
     }
+    nameTag.innerHTML = name
     if(player.attributes[1].value === 'white') {
       playerWhite =  name
     } else {
