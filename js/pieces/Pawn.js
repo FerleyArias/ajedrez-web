@@ -7,6 +7,7 @@ import {validate} from '../functions.js'
     this.posibleMoves= []
     this.direction = direction
     this.value = 1
+    this.specialMove = false
   }
   setMoves() {
     this.moves = []
@@ -22,42 +23,47 @@ import {validate} from '../functions.js'
     let y = this.y + num
     let x = this.x
     let move
-    let validation = validate(x,y)
-    validation = validate(this.x - 1,this.y + num)
-    if(validation.respond === 'occupied' && validation.piece.color != this.color) {
-      move = {
-        move: 'kill', 
-        x:this.x - 1,
-        y:this.y + num, 
-        piece: validation.piece, 
-        index: this.index,
-        promotion: false
+    let validation
+    for (let i = 0; i < 2; i++) {
+      let numx
+      if(i === 0) {
+        numx = -1
+      } else {
+        numx = 1
       }
-      if(this.y + num === yPromotion) {
-        move.promotion = true 
+      validation = validate(this.x + numx,this.y + num)
+      if(validation.respond === 'occupied' && validation.piece.color != this.color) {
+        move = {
+          move: 'kill', 
+          x:this.x + numx,
+          y:this.y + num, 
+          piece: validation.piece, 
+          index: this.index,
+          promotion: false
+        }
+        if(this.y + num === yPromotion) {
+          move.promotion = true 
+        }
+        this.moves.push(move)
       }
-      this.moves.push(move)
-    }
-    else if(validation.respond === 'void') {
-      this.posibleMoves.push({move: 'normal', x:this.x - 1,y:this.y + num})
-    }
-    validation = validate(this.x + 1,this.y + num)
-    if(validation.respond === 'occupied' && validation.piece.color != this.color) {
-      move = {
-        move: 'kill', 
-        x:this.x + 1,
-        y:this.y + num, 
-        piece: validation.piece, 
-        index: this.index,
-        promotion: false
+      else if(validation.respond === 'void') {
+        this.posibleMoves.push({move: 'normal', x:this.x - 1,y:this.y + num})
       }
-      if(this.y + num === yPromotion) {
-        move.promotion = true
+      validation = validate(this.x + numx,this.y)
+      if((validation.respond === 'occupied' && validation.piece.color != this.color) && validation.piece.specialMove) {
+        move = {
+          move: 'kill', 
+          x:this.x + numx,
+          y:this.y + num, 
+          piece: validation.piece, 
+          index: this.index,
+          promotion: false
+        }
+        if(this.y + num === yPromotion) {
+          move.promotion = true 
+        }
+        this.moves.push(move)
       }
-      this.moves.push(move)
-    }
-    else if(validation.respond === 'void') {
-      this.posibleMoves.push({move: 'normal', x:this.x + 1,y:this.y + num})
     }
     x = this.x
     y = this.y + num
@@ -82,7 +88,14 @@ import {validate} from '../functions.js'
       y+=num
       validation = validate(x,y)
       if(validation.respond === 'void') {
-        this.moves.push({move: 'normal', x:x,y:y, index: this.index})
+        move = {
+          move: 'normal', 
+          x:x,
+          y:y, 
+          index: this.index,
+          specialMove: true
+        }
+        this.moves.push(move)
       }
     }
   }

@@ -194,6 +194,9 @@ export function nextTurn(color) {
     piece.setMoves()
   })
   arrayAllies.forEach(piece => {
+    if(piece.name === "pawn") {
+      piece.specialMove = false
+    }
     piece.setMoves()
   })
   if (color === 'white') {

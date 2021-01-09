@@ -75,13 +75,14 @@ canvas.addEventListener('click', (event) => {
   }
   if(moves.length > 0) {
     for (let i = 0; i < moves.length; i++) {
-      if((x > moves[i].x*60) && (x < (moves[i].x + 1)*60) && (y > moves[i].y*60) && (y < (moves[i].y + 1)*60)) {
-        if(moves[i].promotion) {
+      let move = moves[i]
+      if((x > move.x*60) && (x < (move.x + 1)*60) && (y > move.y*60) && (y < (move.y + 1)*60)) {
+        if(move.promotion) {
           let list, container = document.querySelector('.promotion'),promotionOptions
           let promotionData = {
-            x: moves[i].x,
-            y: moves[i].y,
-            pawn: pieces[moves[i].index],
+            x: move.x,
+            y: move.y,
+            pawn: pieces[move.index],
             color: turn
           }
           container.classList.remove('ocult')
@@ -116,15 +117,18 @@ canvas.addEventListener('click', (event) => {
             }
           })
         }
-        pieces[moves[i].index].x = moves[i].x 
-        pieces[moves[i].index].y = moves[i].y
-        pieces[moves[i].index].move = true
-        if(moves[i].move === 'kill') {
-          moves[i].piece.delete()
+        if(move.specialMove) {
+          pieces[move.index].specialMove = true
         }
-        else if (moves[i].move === 'castling') {
-          moves[i].rook.x = moves[i].xRook
-          moves[i].rook.y = moves[i].y
+        pieces[move.index].x = move.x 
+        pieces[move.index].y = move.y 
+        pieces[move.index].move = true
+        if(move.move === 'kill') {
+          move.piece.delete()
+        }
+        else if (move.move === 'castling') {
+          move.rook.x = move.xRook
+          move.rook.y = move.y
         }
         drawTable()
         pieces.forEach(piece => {
