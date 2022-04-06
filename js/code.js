@@ -52,8 +52,8 @@ $players.forEach(player => {
 })
 
 canvas.addEventListener('click', (event) => {
-  let x = event.layerX
-  let y = event.layerY
+  let x = event.offsetX
+  let y = event.offsetY
   let arrayAllies, arrayEnemies
   if(turn === 'white') {
     arrayAllies = piecesWhite
@@ -62,8 +62,12 @@ canvas.addEventListener('click', (event) => {
     arrayAllies = piecesBlack
     arrayEnemies = piecesWhite
   }
+  console.log(event)
+  console.log(x)
+  console.log(y)
   for (let i = 0; i < arrayAllies.length; i++) {
     if((x > arrayAllies[i].x*60) && (x < (arrayAllies[i].x + 1)*60) && (y > arrayAllies[i].y*60) && (y < (arrayAllies[i].y + 1)*60)) {
+      console.log("hola")
       moves = arrayAllies[i].moves
       drawTable()
       pieces.forEach(piece => {
